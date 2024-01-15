@@ -71,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen>
       body: TabBarView(
         controller: _tabController,
         children: [
-          Center(child: Text('Content for Tab 2')),
+          Center(child: Text('Content for Tab 1')),
           Navigator(
             onGenerateRoute: (settings) {
               return MaterialPageRoute(
