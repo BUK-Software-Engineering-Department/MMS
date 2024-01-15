@@ -42,10 +42,8 @@ class _SignInState extends State<SignIn> {
                     _passwordTextConroller),
                 const SizedBox(height: 20),
                 signInSignUpButton(context, true, () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const HomeScreen()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => HomeScreen()));
                 }),
                 signUpOption()
               ],
