@@ -51,15 +51,6 @@ class _HomeScreenState extends State<HomeScreen>
               },
             ),
             ListTile(
-              title: Text('Medications'),
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => MedicationsScreen()));
-              },
-            ),
-            ListTile(
               title: Text('Dosage History'),
               onTap: () {},
             ),
@@ -81,7 +72,13 @@ class _HomeScreenState extends State<HomeScreen>
         controller: _tabController,
         children: [
           Center(child: Text('Content for Tab 2')),
-          Center(child: Text('Content for Tab 2')),
+          Navigator(
+            onGenerateRoute: (settings) {
+              return MaterialPageRoute(
+                builder: (context) => MedicationsScreen(),
+              );
+            },
+          ),
           Center(child: Text('Content for Tab 3')),
         ],
       ),

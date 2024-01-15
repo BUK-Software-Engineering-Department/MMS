@@ -42,11 +42,6 @@ class _MedicationsScreenState extends State<MedicationsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 28, 147, 245),
-        foregroundColor: Colors.white,
-        title: Text('Medications'),
-      ),
       body: ListView.builder(
         itemCount: medications.length,
         itemBuilder: (context, index) {
