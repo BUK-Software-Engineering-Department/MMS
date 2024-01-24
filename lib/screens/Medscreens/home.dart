@@ -3,6 +3,8 @@ import 'package:mms/screens/signin.dart';
 import 'package:mms/screens/Medscreens/medications.dart';
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -21,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('MediGuardian'),
+        title: const Text('MediGuardian'),
       ),
       drawer: Drawer(
         child: ListView(
@@ -43,26 +45,38 @@ class _HomeScreenState extends State<HomeScreen>
                   fontSize: 24,
                 ),
               ),
+              /*child: Column(
+                children: <Widget>[
+                  logoWidget('assets/images/logo.png'),
+                  Text(
+                    'Menu',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                    ),
+                  )
+                ],
+              ),*/
             ),
             ListTile(
-              title: Text('Home'),
+              title: const Text('Home'),
               onTap: () {
                 Navigator.pop(context);
               },
             ),
             ListTile(
-              title: Text('Dosage History'),
+              title: const Text('Dosage History'),
               onTap: () {},
             ),
             ListTile(
-              title: Text('Settings'),
+              title: const Text('Settings'),
               onTap: () {},
             ),
             ListTile(
-              title: Text('Logout'),
+              title: const Text('Logout'),
               onTap: () {
                 Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => SignIn()));
+                    context, MaterialPageRoute(builder: (context) => const SignIn()));
               },
             ),
           ],
@@ -71,19 +85,19 @@ class _HomeScreenState extends State<HomeScreen>
       body: TabBarView(
         controller: _tabController,
         children: [
-          Center(child: Text('Content for Tab 1')),
+          const Center(child: Text('Content for Tab 1')),
           Navigator(
             onGenerateRoute: (settings) {
               return MaterialPageRoute(
-                builder: (context) => MedicationsScreen(),
+                builder: (context) => const MedicationsScreen(),
               );
             },
           ),
-          Center(child: Text('Content for Tab 3')),
+          const Center(child: Text('Content for Tab 3')),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',

@@ -6,17 +6,20 @@ class Medication {
   DateTime? startDate;
   DateTime? endDate;
   TimeOfDay? medicationTime;
+  bool needsRefill;
 
-  Medication({
-    required this.name,
-    required this.dosage,
-    this.startDate,
-    this.endDate,
-    this.medicationTime,
-  });
+  Medication(
+      {required this.name,
+      required this.dosage,
+      this.startDate,
+      this.endDate,
+      this.medicationTime,
+      this.needsRefill = false});
 }
 
 class MedicationsScreen extends StatefulWidget {
+  const MedicationsScreen({super.key});
+
   @override
   _MedicationsScreenState createState() => _MedicationsScreenState();
 }
@@ -60,7 +63,7 @@ class _MedicationsScreenState extends State<MedicationsScreen> {
         onPressed: () {
           _addMedication();
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }
@@ -71,7 +74,7 @@ class _MedicationsScreenState extends State<MedicationsScreen> {
         name: 'New Medication',
         dosage: '',
         startDate: DateTime.now(),
-        endDate: DateTime.now().add(Duration(days: 7)),
+        endDate: DateTime.now().add(const Duration(days: 7)),
         medicationTime: TimeOfDay.now(),
       ));
     });
@@ -83,17 +86,17 @@ class _MedicationsScreenState extends State<MedicationsScreen> {
       builder: (BuildContext context) {
         Medication editedMedication = medications[index];
         return AlertDialog(
-          title: Text('Edit Medication'),
+          title: const Text('Edit Medication'),
           content: Column(
             children: [
               TextField(
-                decoration: InputDecoration(labelText: 'Medication Name'),
+                decoration: const InputDecoration(labelText: 'Medication Name'),
                 onChanged: (value) {
                   editedMedication.name = value;
                 },
               ),
               TextField(
-                decoration: InputDecoration(labelText: 'Dosage'),
+                decoration: const InputDecoration(labelText: 'Dosage'),
                 onChanged: (value) {
                   editedMedication.dosage = value;
                 },
@@ -102,7 +105,7 @@ class _MedicationsScreenState extends State<MedicationsScreen> {
                 children: [
                   Expanded(
                     child: ListTile(
-                      title: Text('Start Date'),
+                      title: const Text('Start Date'),
                       subtitle: Text(
                         editedMedication.startDate?.toString() ?? 'Select Date',
                       ),
@@ -125,7 +128,7 @@ class _MedicationsScreenState extends State<MedicationsScreen> {
                   ),
                   Expanded(
                     child: ListTile(
-                      title: Text('End Date'),
+                      title: const Text('End Date'),
                       subtitle: Text(
                         editedMedication.endDate?.toString() ?? 'Select Date',
                       ),
@@ -133,7 +136,7 @@ class _MedicationsScreenState extends State<MedicationsScreen> {
                         DateTime? selectedDate = await showDatePicker(
                           context: context,
                           initialDate: editedMedication.endDate ??
-                              DateTime.now().add(Duration(days: 7)),
+                              DateTime.now().add(const Duration(days: 7)),
                           firstDate: DateTime.now(),
                           lastDate: DateTime(2101),
                         );
@@ -149,7 +152,7 @@ class _MedicationsScreenState extends State<MedicationsScreen> {
                 ],
               ),
               ListTile(
-                title: Text('Medication Time'),
+                title: const Text('Medication Time'),
                 subtitle: Text(
                   editedMedication.medicationTime?.format(context) ??
                       'Select Time',
@@ -175,7 +178,7 @@ class _MedicationsScreenState extends State<MedicationsScreen> {
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
             ),
             TextButton(
               onPressed: () {
@@ -184,7 +187,7 @@ class _MedicationsScreenState extends State<MedicationsScreen> {
                 });
                 Navigator.pop(context);
               },
-              child: Text('Save'),
+              child: const Text('Save'),
             ),
           ],
         );
@@ -204,7 +207,8 @@ class MedicationCard extends StatelessWidget {
   final VoidCallback onEdit;
   final VoidCallback onDelete;
 
-  MedicationCard({
+  const MedicationCard({
+    super.key,
     required this.medication,
     required this.onEdit,
     required this.onDelete,
@@ -213,7 +217,7 @@ class MedicationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.all(8.0),
+      margin: const EdgeInsets.all(8.0),
       child: ListTile(
         title: Text(medication.name),
         subtitle: Column(
@@ -230,11 +234,11 @@ class MedicationCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             IconButton(
-              icon: Icon(Icons.edit),
+              icon: const Icon(Icons.edit),
               onPressed: onEdit,
             ),
             IconButton(
-              icon: Icon(Icons.delete),
+              icon: const Icon(Icons.delete),
               onPressed: onDelete,
             ),
           ],
