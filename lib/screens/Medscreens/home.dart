@@ -75,8 +75,8 @@ class _HomeScreenState extends State<HomeScreen>
             ListTile(
               title: const Text('Logout'),
               onTap: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => const SignIn()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const SignIn()));
               },
             ),
           ],
@@ -120,9 +120,9 @@ class _HomeScreenState extends State<HomeScreen>
     );
   }
 
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _tabController.dispose();
+  //   super.dispose();
+  // }
 }
