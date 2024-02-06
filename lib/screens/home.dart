@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mms/screens/medications.dart';
-import 'package:mms/screens/signin.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -75,8 +74,7 @@ class _HomeScreenState extends State<HomeScreen>
             ListTile(
               title: const Text('Logout'),
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const SignIn()));
+                Navigator.pushNamed(context, '/');
               },
             ),
           ],

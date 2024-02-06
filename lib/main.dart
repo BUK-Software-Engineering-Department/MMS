@@ -3,6 +3,7 @@ import 'package:mms/screens/home.dart';
 import 'package:mms/screens/signin.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:mms/screens/signup.dart';
 import 'firebase_options.dart';
 
 Future main() async {
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         '/': (context) => const SignIn(),
+        '/signup': (context) => const SignUpScreen(),
         '/home': (context) => const HomeScreen(),
         // '/medicine_list': (context) => MedicineListScreen(),
         // '/reminders': (context) => RemindersScreen(),

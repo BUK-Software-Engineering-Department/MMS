@@ -22,13 +22,14 @@ class _SignInState extends State<SignIn> {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         decoration: const BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-              Color.fromARGB(255, 28, 147, 245),
-              Color.fromARGB(255, 145, 32, 165)
-            ])),
+          gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Color.fromARGB(255, 28, 147, 245),
+                Color.fromARGB(255, 145, 32, 165)
+              ]),
+        ),
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.fromLTRB(
@@ -58,12 +59,7 @@ class _SignInState extends State<SignIn> {
                 ),
                 const SizedBox(height: 20),
                 signInSignUpButton(context, true, () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const HomeScreen(),
-                    ),
-                  );
+                  Navigator.pushNamed(context, '/home');
                 }),
                 signUpOption()
               ],
@@ -84,8 +80,7 @@ class _SignInState extends State<SignIn> {
         ),
         GestureDetector(
           onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const SignUpScreen()));
+            Navigator.pushNamed(context, '/signup');
           },
           child: const Text(
             " Sign Up",

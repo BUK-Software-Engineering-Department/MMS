@@ -70,12 +70,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 const SizedBox(height: 20),
                 signInSignUpButton(context, false, () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const HomeScreen(),
-                    ),
-                  );
+                  Navigator.pushNamed(context, '/home');
                 }),
               ],
             ),
