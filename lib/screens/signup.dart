@@ -1,7 +1,7 @@
-//import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mms/reusable/reusablewidget.dart';
-import 'package:mms/screens/Medscreens/home.dart';
+import 'package:mms/reusable/reusable_text_field.dart';
+import 'package:mms/reusable/signin_signup_btn.dart';
+import 'package:mms/screens/home.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -16,20 +16,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _usernameTextConroller = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    // Set the status bar and navigation bar color to transparent
-    //SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    //statusBarColor: Colors.transparent,
-    //systemNavigationBarColor: Colors.transparent,
-    //systemNavigationBarIconBrightness: Brightness.dark,
-    //));
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         foregroundColor: Colors.white,
         elevation: 0,
-        title: const Text('Sign Up',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+        title: const Text(
+          'Sign Up',
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
       body: Container(
         width: MediaQuery.of(context).size.width,
@@ -49,18 +48,34 @@ class _SignUpScreenState extends State<SignUpScreen> {
             child: Column(
               children: <Widget>[
                 const SizedBox(height: 20),
-                reusableTextField('Enter UserName', Icons.person_outline, false,
-                    _usernameTextConroller),
+                reusableTextField(
+                  'Please enter your full name',
+                  Icons.person_outline,
+                  false,
+                  _usernameTextConroller,
+                ),
                 const SizedBox(height: 20),
-                reusableTextField('Enter Email Id', Icons.person_outline, false,
-                    _emailTextConroller),
+                reusableTextField(
+                  'Please enter your email address',
+                  Icons.email_sharp,
+                  false,
+                  _emailTextConroller,
+                ),
                 const SizedBox(height: 20),
-                reusableTextField('Enter Password', Icons.lock_outlined, true,
-                    _passwordTextConroller),
+                reusableTextField(
+                  'Please choose a password',
+                  Icons.lock_outlined,
+                  true,
+                  _passwordTextConroller,
+                ),
                 const SizedBox(height: 20),
-                signInSignUpButton(context, true, () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const HomeScreen()));
+                signInSignUpButton(context, false, () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const HomeScreen(),
+                    ),
+                  );
                 }),
               ],
             ),

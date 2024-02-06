@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mms/screens/medications.dart';
 import 'package:mms/screens/signin.dart';
-import 'package:mms/screens/Medscreens/medications.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

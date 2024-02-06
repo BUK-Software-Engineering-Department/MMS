@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mms/reusable/reusablewidget.dart';
-import 'package:mms/screens/Medscreens/home.dart';
+import 'package:mms/reusable/reusable_text_field.dart';
+import 'package:mms/reusable/app_constants.dart';
+import 'package:mms/reusable/signin_signup_btn.dart';
+import 'package:mms/screens/home.dart';
 import 'package:mms/screens/signup.dart';
 
 class SignIn extends StatefulWidget {
@@ -33,17 +35,35 @@ class _SignInState extends State<SignIn> {
                 20, MediaQuery.of(context).size.height * 0.2, 20, 0),
             child: Column(
               children: <Widget>[
-                logoWidget('assets/images/logo.png'),
+                Image.asset(
+                  AppAssets.logo,
+                  fit: BoxFit.fitWidth,
+                  width: 200,
+                  height: 200,
+                  color: Colors.white,
+                ),
                 const SizedBox(height: 30),
-                reusableTextField('Enter UserName', Icons.person_outlined,
-                    false, _emailTextConroller),
+                reusableTextField(
+                  'Please enter your email address',
+                  Icons.person_outlined,
+                  false,
+                  _emailTextConroller,
+                ),
                 const SizedBox(height: 20),
-                reusableTextField('Enter Password', Icons.lock_outline, true,
-                    _passwordTextConroller),
+                reusableTextField(
+                  'Please enter your password',
+                  Icons.lock_outline,
+                  true,
+                  _passwordTextConroller,
+                ),
                 const SizedBox(height: 20),
                 signInSignUpButton(context, true, () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const HomeScreen()));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const HomeScreen(),
+                    ),
+                  );
                 }),
                 signUpOption()
               ],

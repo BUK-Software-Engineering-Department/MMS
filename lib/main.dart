@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mms/screens/home.dart';
 import 'package:mms/screens/signin.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -19,12 +20,21 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'MediGuardian',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.deepPurple,
+        ),
         useMaterial3: true,
       ),
-      home: const SignIn(),
+      routes: {
+        '/': (context) => const SignIn(),
+        '/home': (context) => const HomeScreen(),
+        // '/medicine_list': (context) => MedicineListScreen(),
+        // '/reminders': (context) => RemindersScreen(),
+        // '/history': (context) => HistoryScreen(),
+        // '/settings': (context) => SettingsScreen(),
+      },
     );
   }
 }
