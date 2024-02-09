@@ -183,7 +183,7 @@ class _HomePageState extends State<HomePage> {
       child: Obx(() {
         if (_medicineController.medicineList.isEmpty) {
           return _noMedicineMsg();
-        } else
+        } else {
           return ListView.builder(
               scrollDirection: Axis.vertical,
               itemCount: _medicineController.medicineList.length,
@@ -193,9 +193,9 @@ class _HomePageState extends State<HomePage> {
                   // medicine.startTime = '2022-01-01 ' + medicine.startTime!;
                   var hour = medicine.startTime.toString().split(":")[0];
                   var minutes = medicine.startTime.toString().split(":")[1];
-                  debugPrint("My time is " + hour);
-                  debugPrint("My minute is " + minutes);
-                  print('Starttime is ${medicine.startTime.toString()}');
+                  debugPrint("My time is $hour");
+                  debugPrint("My minute is $minutes");
+                  debugPrint('Starttime is ${medicine.startTime.toString()}');
 
                   DateTime date = DateFormat.jm().parse(medicine.startTime!);
                   var myTime = DateFormat("HH:mm").format(date);
@@ -255,6 +255,7 @@ class _HomePageState extends State<HomePage> {
                   return Container();
                 }
               });
+        }
       }),
     );
   }
