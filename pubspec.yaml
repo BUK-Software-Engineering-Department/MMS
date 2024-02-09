@@ -11,13 +11,13 @@ dependencies:
 
   cupertino_icons: ^1.0.2
   date_picker_timeline: ^1.2.3
-  flutter_local_notifications: ^14.0.0
+  flutter_local_notifications: ^16.3.2
   flutter_timezone: ^1.0.8
   flutter_staggered_animations: ^1.0.0
-  flutter_svg: ^1.0.3
+  flutter_svg: ^2.0.9
   get: ^4.6.1
   get_storage: ^2.0.3
-  google_fonts: ^4.0.3
+  google_fonts: ^6.1.0
   sqflite: ^2.0.2
   rxdart: ^0.27.3
 
@@ -25,7 +25,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^2.0.0
+  flutter_lints: ^3.0.1
 
 flutter:
   uses-material-design: true
