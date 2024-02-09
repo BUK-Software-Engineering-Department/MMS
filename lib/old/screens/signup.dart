@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mms/reusable/reusable_text_field.dart';
-import 'package:mms/reusable/signin_signup_btn.dart';
-import 'package:mms/screens/home.dart';
+import 'package:mms/old/reusable/reusable_text_field.dart';
+import 'package:mms/old/reusable/signin_signup_btn.dart';
+import 'package:mms/old/screens/home.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});

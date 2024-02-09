@@ -1,5 +1,5 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:mms/main.dart';
+import 'package:mms/old/main.dart';
 
 class FirebaseAPI {
   final _firebaseMessaging = FirebaseMessaging.instance;
