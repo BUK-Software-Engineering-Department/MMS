@@ -26,8 +26,8 @@ class NotifyHelper {
             requestBadgePermission: false,
             requestAlertPermission: false,
             onDidReceiveLocalNotification: onDidReceiveLocalNotification);
-    final AndroidInitializationSettings androidInitializationSettings =
-        new AndroidInitializationSettings('@mipmap/ic_launcher');
+    const AndroidInitializationSettings androidInitializationSettings =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
     final InitializationSettings initializationSettings =
         InitializationSettings(
       android: androidInitializationSettings,
@@ -36,10 +36,8 @@ class NotifyHelper {
 
     await flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onDidReceiveNotificationResponse: (data) async {
-      if (data != null) {
-        debugPrint('notification payload: ' + data.payload!);
-      }
-      selectNotificationSubject.add(data.payload);
+      debugPrint('notification payload: ${data.payload!}');
+          selectNotificationSubject.add(data.payload);
     });
   }
 
@@ -82,7 +80,7 @@ class NotifyHelper {
         actions: [
           CupertinoDialogAction(
             isDefaultAction: true,
-            child: Text('Ok'),
+            child: const Text('Ok'),
             onPressed: () async {
               Navigator.of(context, rootNavigator: true).pop();
               await Navigator.push(
@@ -100,11 +98,11 @@ class NotifyHelper {
 
   displayNotification({required String title, required String body}) async {
     print("doing test");
-    var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
+    var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
         'your channel id', 'your channel name',
         importance: Importance.max, priority: Priority.high);
-    var iOSPlatformChannelSpecifics = new DarwinNotificationDetails();
-    var platformChannelSpecifics = new NotificationDetails(
+    var iOSPlatformChannelSpecifics = const DarwinNotificationDetails();
+    var platformChannelSpecifics = NotificationDetails(
         android: androidPlatformChannelSpecifics,
         iOS: iOSPlatformChannelSpecifics);
     await flutterLocalNotificationsPlugin.show(
@@ -144,7 +142,7 @@ class NotifyHelper {
           UILocalNotificationDateInterpretation.absoluteTime,
       matchDateTimeComponents: DateTimeComponents.time,
       payload:
-          "${medicine.title}|" + "${medicine.note}|" + "${medicine.startTime}|",
+          "${medicine.title}|${medicine.note}|${medicine.startTime}|",
     );
     /*
         if payload crushes try to do flutter clean and reboot
@@ -153,7 +151,7 @@ class NotifyHelper {
 
   void _configureSelectNotificationSubject() {
     selectNotificationSubject.stream.listen((String? payload) async {
-      debugPrint("My payload is " + payload!);
+      debugPrint("My payload is ${payload!}");
       await Get.to(() => SecondScreen(payload));
     });
   }
@@ -173,7 +171,7 @@ class NotifyHelper {
 }
 
 class SecondScreen extends StatefulWidget {
-  SecondScreen(this.payload);
+  const SecondScreen(this.payload, {super.key});
 
   final String? payload;
 
@@ -198,11 +196,11 @@ class SecondScreenState extends State<SecondScreen> {
       ),
       body: Container(
         child: Column(children: [
-          SizedBox(
+          const SizedBox(
             height: 40,
           ),
           Container(
-            child: Column(children: [
+            child: const Column(children: [
               Text(
                 "Hello, MediGuardian Champs!",
                 style: TextStyle(
@@ -222,7 +220,7 @@ class SecondScreenState extends State<SecondScreen> {
               ),
             ]),
           ),
-          SizedBox(
+          const SizedBox(
             height: 40,
           ),
           Expanded(
@@ -230,11 +228,18 @@ class SecondScreenState extends State<SecondScreen> {
               width: double.maxFinite,
               padding: const EdgeInsets.only(left: 30, right: 30, top: 50),
               margin: const EdgeInsets.only(left: 30, right: 30),
+              decoration: const BoxDecoration(
+                  color: primaryClr,
+                  borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(50),
+                      topLeft: Radius.circular(50),
+                      bottomRight: Radius.circular(50),
+                      bottomLeft: Radius.circular(50))),
               //child:Text('${_payload}'),
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
+                    const Row(
                       children: [
                         Icon(Icons.text_format, size: 35, color: Colors.white),
                         SizedBox(
@@ -246,17 +251,17 @@ class SecondScreenState extends State<SecondScreen> {
                         )
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Text(
-                      '${_payload.toString().split("|")[0] ?? 'No message'}',
-                      style: TextStyle(color: Colors.white, fontSize: 20),
+                      _payload.toString().split("|")[0] ?? 'No message',
+                      style: const TextStyle(color: Colors.white, fontSize: 20),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
-                    Row(
+                    const Row(
                       children: [
                         Icon(Icons.description, size: 35, color: Colors.white),
                         SizedBox(
@@ -268,17 +273,17 @@ class SecondScreenState extends State<SecondScreen> {
                         )
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Text(
-                      '${_payload.toString().split("|")[1] ?? 'No message'}',
-                      style: TextStyle(color: Colors.white, fontSize: 20),
+                      _payload.toString().split("|")[1] ?? 'No message',
+                      style: const TextStyle(color: Colors.white, fontSize: 20),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
-                    Row(
+                    const Row(
                       children: [
                         Icon(Icons.calendar_today_outlined,
                             size: 35, color: Colors.white),
@@ -291,24 +296,17 @@ class SecondScreenState extends State<SecondScreen> {
                         )
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Text(
-                      '${_payload.toString().split("|")[2] ?? 'No message'}',
-                      style: TextStyle(color: Colors.white, fontSize: 20),
+                      _payload.toString().split("|")[2] ?? 'No message',
+                      style: const TextStyle(color: Colors.white, fontSize: 20),
                     )
                   ]),
-              decoration: BoxDecoration(
-                  color: primaryClr,
-                  borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(50),
-                      topLeft: Radius.circular(50),
-                      bottomRight: Radius.circular(50),
-                      bottomLeft: Radius.circular(50))),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 140,
           )
         ]),

@@ -5,7 +5,7 @@ class MyButton extends StatelessWidget {
   final Function? onTap;
   final String? label;
 
-  MyButton({
+  const MyButton({super.key, 
     this.onTap,
     this.label,
   });
@@ -24,7 +24,7 @@ class MyButton extends StatelessWidget {
         child: Center(
           child: Text(
             label!,
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
           ),
         ),
       ),

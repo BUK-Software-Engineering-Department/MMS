@@ -4,8 +4,8 @@ import 'package:mms/models/medicine.dart';
 
 class DBHelper {
   static Database? _db;
-  static final int _version = 1;
-  static final String _tableName = 'medicines';
+  static const int _version = 1;
+  static const String _tableName = 'medicines';
 
   static Future<void> initDb() async {
     if (_db != null) {
@@ -13,10 +13,10 @@ class DBHelper {
       return;
     }
     try {
-      String _path = await getDatabasesPath() + 'medicines.db';
+      String path = '${await getDatabasesPath()}medicines.db';
       debugPrint("in database path");
       _db = await openDatabase(
-        _path,
+        path,
         version: _version,
         onCreate: (db, version) {
           debugPrint("creating a new one");

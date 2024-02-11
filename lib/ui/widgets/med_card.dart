@@ -4,9 +4,11 @@ import 'package:mms/models/medicine.dart';
 import 'package:mms/ui/size_config.dart';
 import 'package:mms/ui/theme.dart';
 
-class MedicineTile extends StatelessWidget {
+class MedicineCard
+ extends StatelessWidget {
   final Medicine medicine;
-  MedicineTile(this.medicine);
+  const MedicineCard
+  (this.medicine, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +18,7 @@ class MedicineTile extends StatelessWidget {
       width: SizeConfig.screenWidth,
       margin: EdgeInsets.only(bottom: getProportionateScreenHeight(12)),
       child: Container(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         //  width: SizeConfig.screenWidth * 0.78,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
@@ -30,13 +32,13 @@ class MedicineTile extends StatelessWidget {
                 Text(
                   medicine.title!,
                   style: GoogleFonts.lato(
-                    textStyle: TextStyle(
+                    textStyle: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: Colors.white),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 12,
                 ),
                 Row(
@@ -47,7 +49,7 @@ class MedicineTile extends StatelessWidget {
                       color: Colors.grey[200],
                       size: 18,
                     ),
-                    SizedBox(width: 4),
+                    const SizedBox(width: 4),
                     Text(
                       "${medicine.startTime} - ${medicine.endTime}",
                       style: GoogleFonts.lato(
@@ -57,7 +59,7 @@ class MedicineTile extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 12),
+                const SizedBox(height: 12),
                 Text(
                   medicine.note!,
                   style: GoogleFonts.lato(
@@ -68,7 +70,7 @@ class MedicineTile extends StatelessWidget {
             ),
           ),
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 10),
+            margin: const EdgeInsets.symmetric(horizontal: 10),
             height: 60,
             width: 0.5,
             color: Colors.grey[200]!.withOpacity(0.7),
@@ -78,7 +80,7 @@ class MedicineTile extends StatelessWidget {
             child: Text(
               medicine.isCompleted == 1 ? "TAKEN" : "PENDING",
               style: GoogleFonts.lato(
-                textStyle: TextStyle(
+                textStyle: const TextStyle(
                     fontSize: 10,
                     fontWeight: FontWeight.bold,
                     color: Colors.white),

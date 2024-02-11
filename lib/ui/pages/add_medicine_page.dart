@@ -8,6 +8,8 @@ import 'package:mms/ui/widgets/input_field.dart';
 import 'package:intl/intl.dart';
 
 class AddMedicinePage extends StatefulWidget {
+  const AddMedicinePage({super.key});
+
   @override
   _AddMedicinePageState createState() => _AddMedicinePageState();
 }
@@ -46,18 +48,18 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
   Widget build(BuildContext context) {
     //Below shows the time like Sep 15, 2021
     //print(new DateFormat.yMMMd().format(new DateTime.now()));
-    print(" starttime " + _startTime!);
-    final now = new DateTime.now();
+    print(" starttime ${_startTime!}");
+    final now = DateTime.now();
     final dt = DateTime(now.year, now.month, now.day, now.minute, now.second);
     final format = DateFormat.jm();
     print(format.format(dt));
-    print("add Medicine date: " + DateFormat.yMd().format(_selectedDate));
+    print("add Medicine date: ${DateFormat.yMd().format(_selectedDate)}");
     //_startTime = DateFormat('hh:mm a').format(DateTime.now()).toString();
     return Scaffold(
-      backgroundColor: context.theme.backgroundColor,
+      backgroundColor: context.theme.colorScheme.background,
       appBar: _appBar(),
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,7 +68,7 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
                 "Add Medication",
                 style: headingTextStyle,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 8,
               ),
               InputField(
@@ -82,7 +84,7 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
                 title: "Date",
                 hint: DateFormat.yMd().format(_selectedDate),
                 widget: IconButton(
-                  icon: (Icon(
+                  icon: (const Icon(
                     Icons.calendar_month_sharp,
                     color: Colors.grey,
                   )),
@@ -99,7 +101,7 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
                       title: "Start Time",
                       hint: _startTime,
                       widget: IconButton(
-                        icon: (Icon(
+                        icon: (const Icon(
                           Icons.alarm,
                           color: Colors.grey,
                         )),
@@ -110,7 +112,7 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 12,
                   ),
                   Expanded(
@@ -118,7 +120,7 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
                       title: "End Time",
                       hint: _endTime,
                       widget: IconButton(
-                        icon: (Icon(
+                        icon: (const Icon(
                           Icons.alarm,
                           color: Colors.grey,
                         )),
@@ -137,7 +139,7 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
                   children: [
                     DropdownButton<String>(
                         //value: _selectedRemind.toString(),
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.keyboard_arrow_down,
                           color: Colors.grey,
                         ),
@@ -157,7 +159,7 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
                             child: Text(value.toString()),
                           );
                         }).toList()),
-                    SizedBox(width: 6),
+                    const SizedBox(width: 6),
                   ],
                 ),
               ),
@@ -170,7 +172,7 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
                       child: DropdownButton<String>(
                           dropdownColor: Colors.blueGrey,
                           //value: _selectedRemind.toString(),
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.keyboard_arrow_down,
                             color: Colors.grey,
                           ),
@@ -191,16 +193,16 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
                               value: value,
                               child: Text(
                                 value,
-                                style: TextStyle(color: Colors.white),
+                                style: const TextStyle(color: Colors.white),
                               ),
                             );
                           }).toList()),
                     ),
-                    SizedBox(width: 6),
+                    const SizedBox(width: 6),
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 18.0,
               ),
               Row(
@@ -216,7 +218,7 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30.0,
               ),
             ],
@@ -263,7 +265,7 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
         "Color",
         style: titleTextStle,
       ),
-      SizedBox(
+      const SizedBox(
         height: 8,
       ),
       Wrap(
@@ -286,7 +288,7 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
                           ? pinkClr
                           : yellowClr,
                   child: index == _selectedColor
-                      ? Center(
+                      ? const Center(
                           child: Icon(
                             Icons.done,
                             color: Colors.white,
@@ -306,14 +308,14 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
   _appBar() {
     return AppBar(
         elevation: 0,
-        backgroundColor: context.theme.backgroundColor,
+        backgroundColor: context.theme.colorScheme.background,
         leading: GestureDetector(
           onTap: () {
             Get.back();
           },
-          child: Icon(Icons.arrow_back_ios, size: 24, color: primaryClr),
+          child: const Icon(Icons.arrow_back_ios, size: 24, color: primaryClr),
         ),
-        actions: [
+        actions: const [
           CircleAvatar(
             radius: 16,
             backgroundImage: AssetImage("images/girl.jpg"),
@@ -348,19 +350,19 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
   double toDouble(TimeOfDay myTime) => myTime.hour + myTime.minute / 60.0;
 
   _getTimeFromUser({required bool isStartTime}) async {
-    var _pickedTime = await _showTimePicker();
-    print(_pickedTime.format(context));
-    String? _formatedTime = _pickedTime.format(context);
-    print(_formatedTime);
-    if (_pickedTime == null)
+    var pickedTime = await _showTimePicker();
+    print(pickedTime.format(context));
+    String? formatedTime = pickedTime.format(context);
+    print(formatedTime);
+    if (pickedTime == null) {
       print("time canceld");
-    else if (isStartTime)
+    } else if (isStartTime)
       setState(() {
-        _startTime = _formatedTime;
+        _startTime = formatedTime;
       });
     else if (!isStartTime) {
       setState(() {
-        _endTime = _formatedTime;
+        _endTime = formatedTime;
       });
       //_compareTime();
     }
@@ -377,15 +379,15 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
   }
 
   _getDateFromUser() async {
-    final DateTime? _pickedDate = await showDatePicker(
+    final DateTime? pickedDate = await showDatePicker(
         context: context,
         initialDate: _selectedDate,
         initialDatePickerMode: DatePickerMode.day,
         firstDate: DateTime(2015),
         lastDate: DateTime(2101));
-    if (_pickedDate != null) {
+    if (pickedDate != null) {
       setState(() {
-        _selectedDate = _pickedDate;
+        _selectedDate = pickedDate;
       });
     }
   }

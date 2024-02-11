@@ -1,5 +1,4 @@
-import 'dart:async';
-
+import 'dart:async'; 
 import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -14,11 +13,13 @@ import 'package:mms/ui/size_config.dart';
 import 'package:mms/ui/theme.dart';
 import 'package:mms/ui/widgets/button.dart';
 import 'package:intl/intl.dart';
-import 'package:mms/ui/widgets/task_tile.dart';
+import 'package:mms/ui/widgets/med_card.dart';
 
 import '../../services/theme_services.dart';
 
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -37,7 +38,7 @@ class _HomePageState extends State<HomePage> {
     notifyHelper = NotifyHelper();
     notifyHelper.initializeNotification();
     notifyHelper.requestIOSPermissions();
-    _timer = Timer(Duration(milliseconds: 500), () {
+    _timer = Timer(const Duration(milliseconds: 500), () {
       setState(() {
         animate = true;
         left = 30;
@@ -51,12 +52,12 @@ class _HomePageState extends State<HomePage> {
     SizeConfig().init(context);
     return Scaffold(
       appBar: _appBar(),
-      backgroundColor: context.theme.backgroundColor,
+      backgroundColor: context.theme.colorScheme.background,
       body: Column(
         children: [
           _addMedicineBar(),
           _dateBar(),
-          SizedBox(
+          const SizedBox(
             height: 12,
           ),
           _showMedicines(),
@@ -67,7 +68,7 @@ class _HomePageState extends State<HomePage> {
 
   _dateBar() {
     return Container(
-      margin: EdgeInsets.only(bottom: 10, left: 20),
+      margin: const EdgeInsets.only(bottom: 10, left: 20),
       child: Container(
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
         child: DatePicker(
@@ -79,20 +80,20 @@ class _HomePageState extends State<HomePage> {
           //selectedTextColor: primaryClr,
           selectedTextColor: Colors.white,
           dateTextStyle: GoogleFonts.lato(
-            textStyle: TextStyle(
+            textStyle: const TextStyle(
               fontSize: 20.0,
               fontWeight: FontWeight.w600,
               color: Colors.grey,
             ),
           ),
           dayTextStyle: GoogleFonts.lato(
-            textStyle: TextStyle(
+            textStyle: const TextStyle(
               fontSize: 16.0,
               color: Colors.grey,
             ),
           ),
           monthTextStyle: GoogleFonts.lato(
-            textStyle: TextStyle(
+            textStyle: const TextStyle(
               fontSize: 10.0,
               color: Colors.grey,
             ),
@@ -114,8 +115,8 @@ class _HomePageState extends State<HomePage> {
 
   _addMedicineBar() {
     return Container(
-      margin: EdgeInsets.only(bottom: 12),
-      padding: EdgeInsets.symmetric(horizontal: 20),
+      margin: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -126,7 +127,7 @@ class _HomePageState extends State<HomePage> {
                 DateFormat.yMMMMd().format(DateTime.now()),
                 style: subHeadingTextStyle,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Text(
@@ -138,7 +139,7 @@ class _HomePageState extends State<HomePage> {
           MyButton(
             label: "+ Add Medication",
             onTap: () async {
-              await Get.to(AddMedicinePage());
+              await Get.to(const AddMedicinePage());
               _medicineController.getMedicines();
             },
           ),
@@ -150,7 +151,7 @@ class _HomePageState extends State<HomePage> {
   _appBar() {
     return AppBar(
         elevation: 0,
-        backgroundColor: context.theme.backgroundColor,
+        backgroundColor: context.theme.colorScheme.background,
         leading: GestureDetector(
           onTap: () {
             ThemeService().switchTheme();
@@ -167,7 +168,7 @@ class _HomePageState extends State<HomePage> {
           child: Icon(Get.isDarkMode ? Icons.wb_sunny : Icons.shield_moon,
               color: Get.isDarkMode ? Colors.white : darkGreyClr),
         ),
-        actions: [
+        actions: const [
           CircleAvatar(
             radius: 16,
             backgroundImage: AssetImage("images/girl.jpg"),
@@ -189,7 +190,7 @@ class _HomePageState extends State<HomePage> {
               itemCount: _medicineController.medicineList.length,
               itemBuilder: (context, index) {
                 Medicine medicine = _medicineController.medicineList[index];
-                if (medicine.repeat == 'Daily') {
+                if (medicine.repeat == 'Daily1') {
                   // medicine.startTime = '2022-01-01 ' + medicine.startTime!;
                   var hour = medicine.startTime.toString().split(":")[0];
                   var minutes = medicine.startTime.toString().split(":")[1];
@@ -223,7 +224,7 @@ class _HomePageState extends State<HomePage> {
                                 onTap: () {
                                   showBottomSheet(context, medicine);
                                 },
-                                child: MedicineTile(medicine)),
+                                child: MedicineCard(medicine)),
                           ],
                         ),
                       ),
@@ -245,7 +246,7 @@ class _HomePageState extends State<HomePage> {
                                 onTap: () {
                                   showBottomSheet(context, medicine);
                                 },
-                                child: MedicineTile(medicine)),
+                                child: MedicineCard(medicine)),
                           ],
                         ),
                       ),
@@ -263,7 +264,7 @@ class _HomePageState extends State<HomePage> {
   showBottomSheet(BuildContext context, Medicine medicine) {
     Get.bottomSheet(
       Container(
-        padding: EdgeInsets.only(top: 4),
+        padding: const EdgeInsets.only(top: 4),
         height: medicine.isCompleted == 1
             ? SizeConfig.screenHeight * 0.20
             : SizeConfig.screenHeight * 0.35,
@@ -277,7 +278,7 @@ class _HomePageState extends State<HomePage> {
                 borderRadius: BorderRadius.circular(10),
                 color: Get.isDarkMode ? Colors.grey[600] : Colors.grey[300]),
           ),
-          Spacer(),
+          const Spacer(),
           medicine.isCompleted == 1
               ? Container()
               : _buildBottomSheetButton(
@@ -303,7 +304,7 @@ class _HomePageState extends State<HomePage> {
                 Get.back();
               },
               isClose: true),
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
         ]),
@@ -319,7 +320,7 @@ class _HomePageState extends State<HomePage> {
     return GestureDetector(
       onTap: onTap as void Function()?,
       child: Container(
-        margin: EdgeInsets.symmetric(vertical: 4),
+        margin: const EdgeInsets.symmetric(vertical: 4),
         height: 55,
         width: SizeConfig.screenWidth! * 0.9,
         decoration: BoxDecoration(
@@ -349,7 +350,7 @@ class _HomePageState extends State<HomePage> {
     return Stack(
       children: [
         AnimatedPositioned(
-          duration: Duration(milliseconds: 2000),
+          duration: const Duration(milliseconds: 2000),
           left: left,
           top: top,
           child: Container(
@@ -372,7 +373,7 @@ class _HomePageState extends State<HomePage> {
                   style: subTitleTextStle,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 80,
               ),
             ],

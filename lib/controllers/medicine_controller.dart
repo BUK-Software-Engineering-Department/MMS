@@ -23,7 +23,7 @@ class MedicineController extends GetxController {
   void getMedicines() async {
     List<Map<String, dynamic>> medicines = await DBHelper.query();
     medicineList.assignAll(
-        medicines.map((data) => new Medicine.fromJson(data)).toList());
+        medicines.map((data) => Medicine.fromJson(data)).toList());
   }
 
   // delete data from table
