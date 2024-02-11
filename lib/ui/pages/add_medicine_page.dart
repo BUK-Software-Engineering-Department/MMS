@@ -318,7 +318,7 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
         actions: const [
           CircleAvatar(
             radius: 16,
-            backgroundImage: AssetImage("images/girl.jpg"),
+            backgroundImage: AssetImage("images/logo.png"),
           ),
           SizedBox(
             width: 20,
