@@ -4,6 +4,8 @@ import 'package:get_storage/get_storage.dart';
 import 'package:mms/db/db_helper.dart';
 import 'package:mms/services/theme_services.dart';
 import 'package:mms/ui/pages/home_page.dart';
+import 'package:mms/ui/pages/signup.dart';
+import 'package:mms/ui/pages/signin.dart';
 import 'package:mms/ui/theme.dart';
 
 void main() async {
@@ -23,7 +25,13 @@ class MyApp extends StatelessWidget {
       theme: Themes.light,
       darkTheme: Themes.dark,
       themeMode: ThemeService().theme,
-      home: const HomePage(),
+      //home: const HomePage(),
+      //navigatorKey: navigationKey,
+      routes: Map<String, WidgetBuilder>.from({
+        '/': (context) => const SignIn(),
+        '/signup': (context) => const SignUpScreen(),
+        '/home': (context) => const HomePage(),
+      })
     );
   }
 }
