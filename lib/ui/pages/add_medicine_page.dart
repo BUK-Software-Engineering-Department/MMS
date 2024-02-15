@@ -30,6 +30,7 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
 
   int _selectedRemind = 5;
   List<int> remindList = [
+    3,
     5,
     10,
     15,
@@ -74,6 +75,11 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
               InputField(
                 title: "Medication Name",
                 hint: "Enter medication name here.",
+                controller: _titleController,
+              ),
+              InputField(
+                title: "Dosage",
+                hint: "Enter dosage here.",
                 controller: _titleController,
               ),
               InputField(

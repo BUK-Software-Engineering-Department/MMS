@@ -58,7 +58,7 @@ class NotifyHelper {
     tz.setLocalLocation(tz.getLocation(timeZoneName));
   }
 
-  /* Future selectNotification(String payload) async {
+   /*Future selectNotification(String payload) async {
     if (payload != null) {
       //selectedNotificationPayload = "The best";
       selectNotificationSubject.add(payload);
@@ -125,7 +125,7 @@ class NotifyHelper {
     return scheduledDate;
   }
 
-  scheduledNotification(int hour, int minutes, Medicine medicine) async {
+  /*scheduledNotification(int hour, int minutes, Medicine medicine) async {
     await flutterLocalNotificationsPlugin.zonedSchedule(
       medicine.id!,
       medicine.title,
@@ -147,6 +147,28 @@ class NotifyHelper {
     /*
         if payload crushes try to do flutter clean and reboot
          */
+  }*/
+
+
+  scheduledNotification(int hour, int minutes, Medicine medicine) async {
+    print('Scheduling notification for ${medicine.title}');
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+      medicine.id!,
+      medicine.title,
+      medicine.note,
+      _nextInstanceOfTenAM(hour, minutes),
+      const NotificationDetails(
+          android: AndroidNotificationDetails(
+        'your channel id',
+        'your channel name',
+      )),
+      androidAllowWhileIdle: true,
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+      matchDateTimeComponents: DateTimeComponents.time,
+      payload:
+          "${medicine.title}|${medicine.note}|${medicine.startTime}",
+    );
   }
 
   void _configureSelectNotificationSubject() {
@@ -314,3 +336,4 @@ class SecondScreenState extends State<SecondScreen> {
     );
   }
 }
+ 
