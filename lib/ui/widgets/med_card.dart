@@ -61,6 +61,13 @@ class MedicineCard
                 ),
                 const SizedBox(height: 12),
                 Text(
+                  medicine.dosage!,
+                  style: GoogleFonts.lato(
+                    textStyle: TextStyle(fontSize: 15, color: Colors.grey[100]),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
                   medicine.note!,
                   style: GoogleFonts.lato(
                     textStyle: TextStyle(fontSize: 15, color: Colors.grey[100]),

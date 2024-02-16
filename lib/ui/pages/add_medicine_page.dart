@@ -18,6 +18,7 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
   final MedicineController _medicineController = Get.find<MedicineController>();
 
   final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _dosageController = TextEditingController();
   final TextEditingController _noteController = TextEditingController();
 
   DateTime _selectedDate = DateTime.now();
@@ -80,7 +81,7 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
               InputField(
                 title: "Dosage",
                 hint: "Enter dosage here.",
-                controller: _titleController,
+                controller: _dosageController,
               ),
               InputField(
                   title: "Instructions for Medication",
@@ -254,6 +255,7 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
       medicine: Medicine(
         note: _noteController.text,
         title: _titleController.text,
+        dosage: _dosageController.text,
         date: DateFormat.yMd().format(_selectedDate),
         startTime: _startTime,
         endTime: _endTime,

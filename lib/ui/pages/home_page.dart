@@ -288,7 +288,7 @@ class _HomePageState extends State<HomePage> {
                   },
                   clr: primaryClr),
           _buildBottomSheetButton(
-              label: "Dismiss",
+              label: "Delete",
               onTap: () {
                 _medicineController.deleteMedicine(medicine);
                 Get.back();
