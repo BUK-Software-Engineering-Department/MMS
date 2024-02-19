@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mms/ui/pages/reusable/reusable_text_field.dart';
 import 'package:mms/ui/pages/reusable/signin_signup_btn.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -69,7 +70,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 const SizedBox(height: 20),
                 signInSignUpButton(context, false, () {
-                  Navigator.pushNamed(context, '/home');
+                  FirebaseAuth.instance.createUserWithEmailAndPassword(email: _emailTextConroller.text, 
+                  password: _passwordTextConroller.text).then((value) {
+                    print("Created Account");
+                    Navigator.pushNamed(context, '/home');
+                  }).onError((error, stackTrace) {
+                    print("Error ${error.toString()}");
+                  });
+                  
                 }),
               ],
             ),

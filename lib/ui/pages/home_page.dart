@@ -15,6 +15,7 @@ import 'package:mms/ui/widgets/button.dart';
 import 'package:intl/intl.dart';
 import 'package:mms/ui/widgets/med_card.dart';
 import '../../services/theme_services.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -31,6 +32,8 @@ class _HomePageState extends State<HomePage> {
   double left = 630;
   double top = 900;
   Timer? _timer;
+
+
   @override
   void initState() {
     super.initState();
@@ -52,6 +55,87 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: _appBar(),
       backgroundColor: context.theme.colorScheme.background,
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                    Color.fromARGB(255, 28, 147, 245),
+                    Color.fromARGB(255, 145, 32, 165)
+                  ])),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          ThemeService().switchTheme();
+                          notifyHelper.displayNotification(
+                            title: "Theme Changed",
+                            body: Get.isDarkMode
+                                ? "Light theme activated."
+                                : "Dark theme activated",
+                          );
+                        },
+                        child: Icon(
+                            Get.isDarkMode
+                                ? Icons.wb_sunny
+                                : Icons.shield_moon,
+                            color: Get.isDarkMode
+                                ? Colors.white
+                                : darkGreyClr),
+                      ),
+                      /*const CircleAvatar(
+                        radius: 16,
+                        backgroundImage: AssetImage("images/logo.png"),
+                      ),*/
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  const Text(
+                    'MediGuardian',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            ListTile(
+              title: const Text('Home'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: const Text('Medication History'),
+              onTap: () {
+                Navigator.pushNamed(context, '/history');
+              },
+            ),
+            ListTile(
+              title: const Text('Logout'),
+              onTap: () {
+                FirebaseAuth.instance.signOut().then((value){
+                  print("Signed Out");
+                  Navigator.pushNamed(context, '/');
+                });
+                
+              },
+            ),
+          ],
+        ),
+      ),
       body: Column(
         children: [
           _addMedicineBar(),
@@ -149,33 +233,18 @@ class _HomePageState extends State<HomePage> {
 
   _appBar() {
     return AppBar(
-        elevation: 0,
-        backgroundColor: context.theme.colorScheme.background,
-        leading: GestureDetector(
-          onTap: () {
-            ThemeService().switchTheme();
-            notifyHelper.displayNotification(
-              title: "Theme Changed",
-              body: Get.isDarkMode
-                  ? "Light theme activated."
-                  : "Dark theme activated",
-            );
-
-            //notifyHelper.scheduledNotification();
-            //notifyHelper.periodicalyNotification();
-          },
-          child: Icon(Get.isDarkMode ? Icons.wb_sunny : Icons.shield_moon,
-              color: Get.isDarkMode ? Colors.white : darkGreyClr),
+      elevation: 0,
+      backgroundColor: context.theme.colorScheme.background,
+      /*actions: const [
+        CircleAvatar(
+          radius: 16,
+          backgroundImage: AssetImage("images/logo.png"),
         ),
-        actions: const [
-          CircleAvatar(
-            radius: 16,
-            backgroundImage: AssetImage("images/logo.png"),
-          ),
-          SizedBox(
-            width: 20,
-          ),
-        ]);
+        SizedBox(
+          width: 20,
+        ),
+      ],*/
+    );
   }
 
   _showMedicines() {
@@ -259,7 +328,6 @@ class _HomePageState extends State<HomePage> {
       }),
     );
   }
-
   showBottomSheet(BuildContext context, Medicine medicine) {
     Get.bottomSheet(
       Container(
@@ -352,31 +420,30 @@ class _HomePageState extends State<HomePage> {
           duration: const Duration(milliseconds: 2000),
           left: left,
           top: top,
-          child: Container(
-              child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SvgPicture.asset(
-                "images/medicine.svg",
-                color: primaryClr.withOpacity(0.5),
-                height: 90,
-                semanticsLabel: 'Medicine',
-              ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                child: Text(
-                  "You do not have any medication yet!\nAdd new medicine to manage your health.",
-                  textAlign: TextAlign.center,
-                  style: subTitleTextStle,
-                ),
-              ),
-              const SizedBox(
-                height: 80,
-              ),
-            ],
-          )),
+          child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+          SvgPicture.asset(
+            "images/medicine.svg",
+            color: primaryClr.withOpacity(0.5),
+            height: 90,
+            semanticsLabel: 'Medicine',
+          ),
+          Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+            child: Text(
+              "You do not have any medication yet!\nAdd new medicine to manage your health.",
+              textAlign: TextAlign.center,
+              style: subTitleTextStle,
+            ),
+          ),
+          const SizedBox(
+            height: 80,
+          ),
+                      ],
+                    ),
         )
       ],
     );

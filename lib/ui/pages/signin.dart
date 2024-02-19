@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mms/ui/pages/reusable/reusable_text_field.dart';
 import 'package:mms/ui/pages/reusable/app_constants.dart';
 import 'package:mms/ui/pages/reusable/signin_signup_btn.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({super.key});
@@ -57,7 +58,15 @@ class _SignInState extends State<SignIn> {
                 ),
                 const SizedBox(height: 20),
                 signInSignUpButton(context, true, () {
-                  Navigator.pushNamed(context, '/home');
+                  FirebaseAuth.instance.signInWithEmailAndPassword(email: _emailTextConroller.text, 
+                  password: _passwordTextConroller.text).then((value) {
+                    print("Signed In");
+                    Navigator.pushNamed(context, '/home').onError((error, stackTrace){
+                    print("Error ${error.toString()}");
+                    return null;
+                  });
+                  });
+                  
                 }),
                 signUpOption()
               ],
