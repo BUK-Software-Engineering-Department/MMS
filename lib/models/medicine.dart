@@ -10,6 +10,7 @@ class Medicine {
   int? color;
   int? remind;
   String? repeat;
+  
 
   Medicine({
     this.id,
