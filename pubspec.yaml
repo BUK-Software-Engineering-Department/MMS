@@ -1,0 +1,48 @@
+name: mms
+description: "A new Flutter project."
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.2.3 <4.0.0" 
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  date_picker_timeline: ^1.2.3
+  flutter_local_notifications: ^16.3.2
+  flutter_timezone: ^1.0.8
+  flutter_staggered_animations: ^1.0.0
+  flutter_svg: ^2.0.9
+  get: ^4.6.1
+  get_storage: ^2.0.3
+  google_fonts: ^6.1.0
+  sqflite: ^2.0.2
+  rxdart: ^0.27.3
+  timezone: ^0.9.2
+  intl: ^0.18.1
+  firebase_core: ^2.25.4
+  firebase_auth: ^4.17.4
+  firebase_messaging: ^14.7.16
+  
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^3.0.1
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - images/
+
+  # fonts:
+  #   - family: Schyler
+  #     fonts:
+  #       - asset: fonts/Schyler-Regular.ttf
+  #       - asset: fonts/Schyler-Italic.ttf
+  #         style: italic
+ 
