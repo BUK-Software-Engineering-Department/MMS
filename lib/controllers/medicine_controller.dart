@@ -37,4 +37,9 @@ class MedicineController extends GetxController {
     await DBHelper.update(id);
     getMedicines();
   }
+  // dismiss a medicine from the screen
+  void dismissMedicine(Medicine medicine) {
+    medicineList.remove(medicine);
+    //getMedicines();
+  }
 }

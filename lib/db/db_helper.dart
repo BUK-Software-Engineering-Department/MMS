@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:mms/models/medicine.dart';
 
+
 class DBHelper {
   static Database? _db;
   static const int _version = 1;
@@ -21,13 +22,14 @@ class DBHelper {
         onCreate: (db, version) {
           debugPrint("creating a new one");
           return db.execute(
-            "CREATE TABLE $_tableName("
-            "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-            "title STRING, note TEXT, dosage TEXT, date STRING, "
-            "startTime STRING, endTime STRING, "
-            "remind INTEGER, repeat STRING, "
-            "color INTEGER, "
-            "isCompleted INTEGER)",
+              "CREATE TABLE $_tableName("
+              "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+              "title STRING, note TEXT, date STRING, "
+              "startTime STRING, endTime STRING, "
+              "remind INTEGER, repeat STRING, "
+              "color INTEGER, "
+              "dosage STRING, "  // Add the new column for dosage
+              "isCompleted INTEGER)"
           );
         },
       );
@@ -40,7 +42,7 @@ class DBHelper {
     print("insert function called");
     return await _db!.insert(_tableName, medicine.toJson());
   }
-
+ 
   static Future<int> delete(Medicine medicine) async =>
       await _db!.delete(_tableName, where: 'id = ?', whereArgs: [medicine.id]);
 
