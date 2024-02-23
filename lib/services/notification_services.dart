@@ -19,7 +19,7 @@ class NotifyHelper {
   initializeNotification() async {
     _configureSelectNotificationSubject();
     await _configureLocalTimeZone();
-    // await requestIOSPermissions(flutterLocalNotificationsPlugin);
+     //await requestIOSPermissions(flutterLocalNotificationsPlugin);
     final DarwinInitializationSettings initializationSettingsIOS =
         DarwinInitializationSettings(
             requestSoundPermission: false,
@@ -58,7 +58,7 @@ class NotifyHelper {
     tz.setLocalLocation(tz.getLocation(timeZoneName));
   }
 
-   /*Future selectNotification(String payload) async {
+   Future selectNotification(String payload) async {
     if (payload != null) {
       //selectedNotificationPayload = "The best";
       selectNotificationSubject.add(payload);
@@ -67,7 +67,7 @@ class NotifyHelper {
       print("Notification Done");
     }
      Get.to(()=>SecondScreen(selectedNotificationPayload));
-  }*/
+  }
 
   Future onDidReceiveLocalNotification(
       int id, String? title, String? body, String? payload) async {
@@ -125,8 +125,8 @@ class NotifyHelper {
     return scheduledDate;
   }
 
-  /*scheduledNotification(int hour, int minutes, Medicine medicine) async {
-    await flutterLocalNotificationsPlugin.zonedSchedule(
+  scheduledNotification(int hour, int minutes, Medicine medicine) async {
+     await flutterLocalNotificationsPlugin.zonedSchedule(
       medicine.id!,
       medicine.title,
       medicine.note,
@@ -147,10 +147,10 @@ class NotifyHelper {
     /*
         if payload crushes try to do flutter clean and reboot
          */
-  }*/
+  }
 
 
-  scheduledNotification(int hour, int minutes, Medicine medicine) async {
+  /*scheduledNotification(int hour, int minutes, Medicine medicine) async {
     print('Scheduling notification for ${medicine.title}');
     await flutterLocalNotificationsPlugin.zonedSchedule(
       medicine.id!,
@@ -169,8 +169,8 @@ class NotifyHelper {
       payload:
           "${medicine.title}|${medicine.note}|${medicine.startTime}",
     );
-  }
-
+  }*/
+  
   void _configureSelectNotificationSubject() {
     selectNotificationSubject.stream.listen((String? payload) async {
       debugPrint("My payload is ${payload!}");

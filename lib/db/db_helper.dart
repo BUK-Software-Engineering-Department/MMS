@@ -25,7 +25,7 @@ class DBHelper {
               "CREATE TABLE $_tableName("
               "id INTEGER PRIMARY KEY AUTOINCREMENT, "
               "title STRING, note TEXT, date STRING, "
-              "startTime STRING, endTime STRING, "
+              "startTime STRING,  "
               "remind INTEGER, repeat STRING, "
               "color INTEGER, "
               "dosage STRING, "  // Add the new column for dosage

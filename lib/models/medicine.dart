@@ -6,7 +6,7 @@ class Medicine {
   int? isCompleted;
   String? date;
   String? startTime;
-  String? endTime;
+  //String? endTime;
   int? color;
   int? remind;
   String? repeat;
@@ -20,7 +20,7 @@ class Medicine {
     this.isCompleted,
     this.date,
     this.startTime,
-    this.endTime,
+    //this.endTime,
     this.color,
     this.remind,
     this.repeat,
@@ -34,7 +34,7 @@ class Medicine {
     isCompleted = json['isCompleted'];
     date = json['date'];
     startTime = json['startTime'];
-    endTime = json['endTime'];
+    //endTime = json['endTime'];
     color = json['color'];
     remind = json['remind'];
     repeat = json['repeat'];
@@ -49,7 +49,7 @@ class Medicine {
     data['dosage'] = dosage;
     data['isCompleted'] = isCompleted;
     data['startTime'] = startTime;
-    data['endTime'] = endTime;
+    //data['endTime'] = endTime;
     data['color'] = color;
     data['remind'] = remind;
     data['repeat'] = repeat;

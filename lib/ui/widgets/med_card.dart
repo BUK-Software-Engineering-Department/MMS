@@ -51,7 +51,7 @@ class MedicineCard
                     ),
                     const SizedBox(width: 4),
                     Text(
-                      "${medicine.startTime} - ${medicine.endTime}",
+                      "${medicine.startTime}",
                       style: GoogleFonts.lato(
                         textStyle:
                             TextStyle(fontSize: 13, color: Colors.grey[100]),
