@@ -515,11 +515,11 @@ class _HomePageState extends State<HomePage> {
                 if (startTimeParts.length == 2) {
                   var hour = startTimeParts[0];
                   var minutes = startTimeParts[1];
-                  /*notifyHelper.scheduledNotification(
+                  notifyHelper.scheduledNotification(
                     int.tryParse(hour) ?? 0, // Using tryParse to handle parsing errors
                     int.tryParse(minutes) ?? 0, // Using tryParse to handle parsing errors
                     medicine,
-                  );*/
+                  );
                 } else {
                   print("Invalid startTime format: ${medicine.startTime}");
                 }

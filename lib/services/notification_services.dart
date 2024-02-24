@@ -137,7 +137,8 @@ class NotifyHelper {
         'your channel id',
         'your channel name',
       )),
-      androidAllowWhileIdle: true,
+       androidScheduleMode:AndroidScheduleMode.inexactAllowWhileIdle,
+
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
       matchDateTimeComponents: DateTimeComponents.time,
@@ -188,6 +189,8 @@ class NotifyHelper {
         NotificationDetails(android: androidPlatformChannelSpecifics);
     await flutterLocalNotificationsPlugin.periodicallyShow(0, 'repeating title',
         'repeating body', RepeatInterval.everyMinute, platformChannelSpecifics,
+        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+
         androidAllowWhileIdle: true);
   }
 }

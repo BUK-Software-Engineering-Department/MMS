@@ -34,11 +34,11 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
 
   @override
   Widget build(BuildContext context) {
-    print("starttime ${_startTime ?? 'null'}");
+    print("starttime ${_startTime ?? ''}");
     //print("endtime ${_endTime ?? 'null'}");
-    print("selectedDate ${_selectedDate ?? 'null'}");
+    print("selectedDate ${_selectedDate ?? ''}");
     print("selectedRemind ${_selectedRemind ?? 'null'}");
-    print("selectedRepeat ${_selectedRepeat ?? 'null'}");
+    print("selectedRepeat ${_selectedRepeat ?? ''}");
 
     final now = DateTime.now();
     final dt = DateTime(now.year, now.month, now.day, now.minute, now.second);
