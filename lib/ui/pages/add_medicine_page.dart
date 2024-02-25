@@ -1,219 +1,201 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:mms/controllers/medicine_controller.dart';
-import 'package:mms/models/medicine.dart';
 import 'package:mms/ui/theme.dart';
 import 'package:mms/ui/widgets/button.dart';
-import 'package:mms/ui/widgets/input_field.dart';
-import 'package:intl/intl.dart';
+import '../../models/medicine.dart';
+import '../widgets/input_field.dart';
 
 class AddMedicinePage extends StatefulWidget {
-  const AddMedicinePage({super.key});
+  const AddMedicinePage({Key? key}) : super(key: key);
 
   @override
-  _AddMedicinePageState createState() => _AddMedicinePageState();
+  State<AddMedicinePage> createState() => _AddMedicinePageState();
 }
 
 class _AddMedicinePageState extends State<AddMedicinePage> {
-  final MedicineController _medicineController = Get.find<MedicineController>();
-
-  final TextEditingController _titleController = TextEditingController();
+  // ignore: non_constant_identifier_names
+  final MedicineController _MedicineController = Get.put(MedicineController());
   final TextEditingController _dosageController = TextEditingController();
+  final TextEditingController _titleController = TextEditingController();
   final TextEditingController _noteController = TextEditingController();
 
-  DateTime? _selectedDate;
-  String? _startTime;
-  //String? _endTime;
-  int _selectedColor = 0;
+  DateTime _selectedDate = DateTime.now();
+  String _startTime = DateFormat('hh:mm a').format(DateTime.now()).toString();
+  String _endTime = DateFormat('hh:mm a')
+      .format(DateTime.now().add(const Duration(minutes: 15)))
+      .toString();
 
   int _selectedRemind = 5;
   List<int> remindList = [5, 10, 15, 20];
-
-  String? _selectedRepeat = 'None';
+  String _selectedRepeat = 'None';
   List<String> repeatList = ['None', 'Daily', 'Weekly', 'Monthly'];
+
+  int _selectedColor = 0;
 
   @override
   Widget build(BuildContext context) {
-    print("starttime ${_startTime ?? ''}");
-    //print("endtime ${_endTime ?? 'null'}");
-    print("selectedDate ${_selectedDate ?? ''}");
-    print("selectedRemind ${_selectedRemind ?? 'null'}");
-    print("selectedRepeat ${_selectedRepeat ?? ''}");
-
-    final now = DateTime.now();
-    final dt = DateTime(now.year, now.month, now.day, now.minute, now.second);
-    final format = DateFormat.jm();
-    print(format.format(dt));
-
     return Scaffold(
-      backgroundColor: context.theme.colorScheme.background,
-      appBar: _appBar(),
+      // ignore: deprecated_member_use
+      backgroundColor: context.theme.backgroundColor,
+      appBar: _customAppBar(),
       body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        padding: const EdgeInsets.symmetric(horizontal: 10),
         child: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Add Medication",
-                style: headingTextStyle,
-              ),
-              const SizedBox(
-                height: 8,
+                'Add Medication',
+                style: headingStyle,
               ),
               InputField(
-                title: "Medication Name",
-                hint: "Enter medication name here.",
+                title: 'Medication Name',
+                hint: 'Enter medication name here.',
                 controller: _titleController,
               ),
               InputField(
-                title: "Dosage",
-                hint: "Enter dosage here.",
+                title: 'Dosage',
+                  hint: 'Enter dosage here.',
                 controller: _dosageController,
               ),
               InputField(
-                  title: "Instructions for Medication",
-                  hint: "Enter instructions here.",
-                  controller: _noteController),
+                title: 'Instructions for Medication',
+                  hint: 'Enter instructions here.',
+                controller: _noteController,
+              ),
               InputField(
-                title: "Date",
-                hint: _selectedDate != null ? DateFormat.yMd().format(_selectedDate!) : 'Select date',
+                title: 'Date',
+                hint: DateFormat.yMd().format(_selectedDate),
                 widget: IconButton(
+                  onPressed: () => _getDateFromUser(),
                   icon: const Icon(
-                    Icons.calendar_month_sharp,
+                    Icons.calendar_today_outlined,
                     color: Colors.grey,
                   ),
-                  onPressed: () {
-                    _getDateFromUser();
-                  },
                 ),
               ),
               Row(
                 children: [
                   Expanded(
                     child: InputField(
-                      title: "Start Time",
-                      hint: _startTime ?? 'Select time',
+                      title: 'Start Time',
+                      hint: _startTime,
                       widget: IconButton(
+                        onPressed: () => _getTimeFromUser(isStartTime: true),
                         icon: const Icon(
-                          Icons.alarm,
+                          Icons.access_time_rounded,
                           color: Colors.grey,
                         ),
-                        onPressed: () {
-                          _getTimeFromUser(isStartTime: true);
-                          setState(() {});
-                        },
                       ),
                     ),
                   ),
                   const SizedBox(
                     width: 12,
                   ),
-                  /*Expanded(
+                  Expanded(
                     child: InputField(
-                      title: "End Time",
-                      hint: _endTime ?? 'Select time',
+                      title: 'End Time',
+                      hint: _endTime,
                       widget: IconButton(
+                        onPressed: () => _getTimeFromUser(isStartTime: false),
                         icon: const Icon(
-                          Icons.alarm,
+                          Icons.access_time_rounded,
                           color: Colors.grey,
                         ),
-                        onPressed: () {
-                          _getTimeFromUser(isStartTime: false);
-                        },
                       ),
                     ),
-                  ),*/
-                ],
-              ),
-              InputField(
-                title: "Remind",
-                hint: "$_selectedRemind minutes early",
-                widget: Row(
-                  children: [
-                    DropdownButton<String>(
-                        value: _selectedRemind.toString(),
-                        icon: const Icon(
-                          Icons.keyboard_arrow_down,
-                          color: Colors.grey,
-                        ),
-                        iconSize: 32,
-                        elevation: 4,
-                        style: subTitleTextStle,
-                        underline: Container(height: 0),
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            _selectedRemind = int.parse(newValue!);
-                          });
-                        },
-                        items: remindList
-                            .map<DropdownMenuItem<String>>((int value) {
-                          return DropdownMenuItem<String>(
-                            value: value.toString(),
-                            child: Text(value.toString()),
-                          );
-                        }).toList()),
-                    const SizedBox(width: 6),
-                  ],
-                ),
-              ),
-              InputField(
-                title: "Repeat",
-                hint: _selectedRepeat ?? 'None',
-                widget: Row(
-                  children: [
-                    DropdownButton<String>(
-                      dropdownColor: Colors.blueGrey,
-                      value: _selectedRepeat,
-                      icon: const Icon(
-                        Icons.keyboard_arrow_down,
-                        color: Colors.grey,
-                      ),
-                      iconSize: 32,
-                      elevation: 4,
-                      style: subTitleTextStle,
-                      underline: Container(
-                        height: 6,
-                      ),
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          _selectedRepeat = newValue;
-                        });
-                      },
-                      items: repeatList
-                        .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(
-                              value,
-                              style: const TextStyle(color: Colors.white),
-                            ),
-                          );
-                        }).toList(),
-                    ),
-                    const SizedBox(width: 6),
-                  ],
-                ),
-              ),
-
-              const SizedBox(
-                height: 18.0,
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _colorChips(),
-                  MyButton(
-                    label: "Add Medication",
-                    onTap: () {
-                      _validateInputs();
-                    },
                   ),
                 ],
               ),
+              InputField(
+                title: 'Remind',
+                hint: '$_selectedRemind minutes early',
+                widget: Row(
+                  children: [
+                    DropdownButton(
+                      dropdownColor: Colors.blueGrey,
+                      borderRadius: BorderRadius.circular(10),
+                      items: remindList
+                          .map<DropdownMenuItem<String>>(
+                              (int value) => DropdownMenuItem(
+                                  value: value.toString(),
+                                  child: Text(
+                                    '$value',
+                                    style: const TextStyle(color: Colors.white),
+                                  )))
+                          .toList(),
+                      icon: const Icon(Icons.keyboard_arrow_down,
+                          color: Colors.grey),
+                      iconSize: 32,
+                      elevation: 4,
+                      underline: Container(
+                        height: 0,
+                      ),
+                      style: subTitleStyle,
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          _selectedRemind = int.parse(newValue!);
+                        });
+                      },
+                    ),
+                    const SizedBox(
+                      width: 6,
+                    ),
+                  ],
+                ),
+              ),
+              InputField(
+                title: 'Repeat',
+                hint: _selectedRepeat,
+                widget: Row(
+                  children: [
+                    DropdownButton(
+                      dropdownColor: Colors.blueGrey,
+                      borderRadius: BorderRadius.circular(10),
+                      items: repeatList
+                          .map<DropdownMenuItem<String>>(
+                              (String value) => DropdownMenuItem(
+                                  value: value,
+                                  child: Text(
+                                    value,
+                                    style: const TextStyle(color: Colors.white),
+                                  )))
+                          .toList(),
+                      icon: const Icon(Icons.keyboard_arrow_down,
+                          color: Colors.grey),
+                      iconSize: 32,
+                      elevation: 4,
+                      underline: Container(
+                        height: 0,
+                      ),
+                      style: subTitleStyle,
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          _selectedRepeat = newValue!;
+                        });
+                      },
+                    ),
+                    const SizedBox(
+                      width: 6,
+                    ),
+                  ],
+                ),
+              ),
               const SizedBox(
-                height: 30.0,
+                height: 18,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  _colorPalette(),
+                  MyButton(
+                      label: 'Add Medication',
+                      onTap: () {
+                        _validateData();
+                      }),
+                ],
               ),
             ],
           ),
@@ -222,54 +204,82 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
     );
   }
 
-  _validateInputs() {
-    if (_titleController.text.isNotEmpty &&
-        _noteController.text.isNotEmpty &&
-        _dosageController.text.isNotEmpty &&
-        _selectedDate != null &&
-        _startTime != null &&
-        //_endTime != null &&
-        _selectedRemind != null &&
-        _selectedRepeat != null) {
-      _addMedicineToDB();
-      Get.back();
-    } else if (_titleController.text.isEmpty ||
-        _noteController.text.isEmpty ||
-        _dosageController.text.isEmpty) {
-      Get.snackbar(
-        "Required",
-        "All fields are required.",
-        snackPosition: SnackPosition.BOTTOM,
-      );
-    } else {
-      print("############ SOMETHING BAD HAPPENED #################");
-    }
-  }
-
-  _addMedicineToDB() async {
-    await _medicineController.addMedicine(
-      medicine: Medicine(
-        note: _noteController.text,
-        title: _titleController.text,
-        dosage: _dosageController.text,
-        date: DateFormat.yMd().format(_selectedDate!),
-        startTime: _startTime,
-        //endTime: _endTime,
-        remind: _selectedRemind,
-        repeat: _selectedRepeat,
-        color: _selectedColor,
-        isCompleted: 0,
+  AppBar _customAppBar() {
+    return AppBar(
+      leading: IconButton(
+        onPressed: () => Get.back(),
+        icon: const Icon(
+          Icons.arrow_back_ios,
+          size: 24,
+          color: primaryClr,
+        ),
       ),
+      elevation: 0,
+      // ignore: deprecated_member_use
+      backgroundColor: context.theme.backgroundColor,
+      actions: const [
+        CircleAvatar(
+          //backgroundImage: AssetImage('images/person.jpeg'),
+          radius: 18,
+        ),
+        SizedBox(
+          width: 20,
+        ),
+      ],
+      centerTitle: true,
+
     );
   }
 
-  _colorChips() {
+  _validateData() {
+    if (_titleController.text.isNotEmpty && _noteController.text.isNotEmpty &&_dosageController.text.isNotEmpty) {
+      _addMedicinesToDb();
+      Get.back();
+    } else if (_titleController.text.isNotEmpty ||
+        _noteController.text.isNotEmpty || _dosageController.text.isNotEmpty) {
+      Get.snackbar('required', 'All fields are required!',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.white,
+          colorText: pinkClr,
+          icon: const Icon(
+            Icons.warning_amber_rounded,
+            color: Colors.red,
+          ));
+    } else {
+      print(
+          '############################ SOMETHING WRONG HAPPENED #############################');
+    }
+  }
+
+  _addMedicinesToDb() async {
+    try {
+      int value = await _MedicineController.addMedicine(
+        medicine: Medicine(
+          title: _titleController.text,
+          dosage: _dosageController.text,
+          note: _noteController.text,
+          isCompleted: 0,
+          date: DateFormat.yMd().format(_selectedDate),
+          startTime: _startTime,
+          endTime: _endTime,
+          color: _selectedColor,
+          remind: _selectedRemind,
+          repeat: _selectedRepeat,
+        ),
+      );
+      print('Value: $value');
+    } catch (e) {
+      print('error: $e');
+    }
+  }
+
+  Column _colorPalette() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Color",
-          style: titleTextStle,
+          'Color',
+          style: titleStyle,
         ),
         const SizedBox(
           height: 8,
@@ -277,117 +287,70 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
         Wrap(
           children: List<Widget>.generate(
             3,
-            (int index) {
-              return GestureDetector(
-                onTap: () {
-                  setState(() {
-                    _selectedColor = index;
-                  });
-                },
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: CircleAvatar(
-                    radius: 14,
-                    backgroundColor: index == 0 ? primaryClr : index == 1 ? pinkClr : yellowClr,
-                    child: index == _selectedColor
-                        ? const Center(
-                            child: Icon(
-                              Icons.done,
-                              color: Colors.white,
-                              size: 18,
-                            ),
-                          )
-                        : Container(),
-                  ),
+            (index) => GestureDetector(
+              onTap: () {
+                setState(() {
+                  _selectedColor = index;
+                });
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(right: 8.0,bottom: 8.0),
+                child: CircleAvatar(
+                  backgroundColor: index == 0
+                      ? primaryClr
+                      : index == 1
+                          ? pinkClr
+                          : yellowClr,
+                  radius: 14,
+                  child: _selectedColor == index
+                      ? const Icon(
+                          Icons.done,
+                          size: 16,
+                          color: Colors.white,
+                        )
+                      : null,
                 ),
-              );
-            },
-          ).toList(),
-        ),
-      ],
-    );
-  }
-
-  _appBar() {
-    return AppBar(
-      elevation: 0,
-      backgroundColor: context.theme.colorScheme.background,
-      leading: GestureDetector(
-        onTap: () {
-          Get.back();
-        },
-        child: const Icon(
-          Icons.arrow_back_ios,
-          size: 24,
-          color: primaryClr,
-        ),
-      ),
-      actions: const [
-        CircleAvatar(
-          radius: 16,
-          backgroundImage: AssetImage("images/logo.png"),
-        ),
-        SizedBox(
-          width: 20,
-        ),
-      ],
-    );
-  }
-
-      _getTimeFromUser({required bool isStartTime}) async {
-        var pickedTime = await _showTimePicker();
-        if (pickedTime != null) {
-          print(pickedTime.format(context));
-          String formatedTime = pickedTime.format(context)!;
-          print(formatedTime);
-          if (isStartTime) {
-            setState(() {
-              _startTime = formatedTime;
-            });
-          } else {
-            setState(() {
-              //_endTime = formatedTime;
-            });
-          }
-        } else {
-          print("Time canceled");
-        }
-      }
-
-
-      _showTimePicker() async {
-      if (_startTime != null) {
-        return showTimePicker(
-          initialTime: TimeOfDay(
-            hour: int.parse(_startTime!.split(":")[0]),
-            minute: int.parse(_startTime!.split(":")[1].split(" ")[0]),
+              ),
+            ),
           ),
-          initialEntryMode: TimePickerEntryMode.input,
-          context: context,
-        );
-      } else {
-        // Handle the case when _startTime is null
-        // For example, you can return a default time
-        return showTimePicker(
-          initialTime: TimeOfDay.now(), // You can set any default time here
-          initialEntryMode: TimePickerEntryMode.input,
-          context: context,
-        );
-      }
-    }
-
+        ),
+      ],
+    );
+  }
 
   _getDateFromUser() async {
-    final DateTime? pickedDate = await showDatePicker(
+    DateTime? pickedDate = await showDatePicker(
         context: context,
-        initialDate: _selectedDate ?? DateTime.now(),
-        initialDatePickerMode: DatePickerMode.day,
+        initialDate: _selectedDate,
         firstDate: DateTime(2015),
-        lastDate: DateTime(2101));
+        lastDate: DateTime(2050));
+
     if (pickedDate != null) {
-      setState(() {
-        _selectedDate = pickedDate;
-      });
+      setState(() => _selectedDate = pickedDate);
+    } else {
+      print('Please select correct date');
+    }
+  }
+
+  _getTimeFromUser({required bool isStartTime}) async {
+    TimeOfDay? pickedTime = await showTimePicker(
+      initialEntryMode: TimePickerEntryMode.input,
+      context: context,
+      initialTime: isStartTime
+          ? TimeOfDay.fromDateTime(DateTime.now())
+          : TimeOfDay.fromDateTime(
+              DateTime.now().add(const Duration(minutes: 15))),
+    );
+
+    // ignore: use_build_context_synchronously
+    String formattedTime = pickedTime!.format(context);
+
+    if (isStartTime) {
+      setState(() => _startTime = formattedTime);
+    } else if (!isStartTime) {
+      setState(() => _endTime = formattedTime);
+    } else {
+      print('Something went wrong !');
     }
   }
 }

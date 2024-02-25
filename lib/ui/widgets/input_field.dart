@@ -1,73 +1,77 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mms/ui/theme.dart';
+
+import '../size_config.dart';
+import '../theme.dart';
 
 class InputField extends StatelessWidget {
-  final String title;
-  final TextEditingController? controller;
-  final String? hint;
-  final Widget? widget;
+  const InputField({
+    Key? key,
+    required this.title,
+    required this.hint,
+    this.controller,
+    this.widget,
+  }) : super(key: key);
 
-  const InputField(
-      {super.key, required this.title, this.controller, required this.hint, this.widget});
+  final String title;
+  final String hint;
+  final TextEditingController? controller;
+  final Widget? widget;
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Container(
-        margin: const EdgeInsets.only(top: 16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              style: titleTextStle,
-            ),
-            const SizedBox(
-              height: 8.0,
-            ),
-            Container(
-              padding: const EdgeInsets.only(left: 14.0),
-              height: 52,
-              decoration: BoxDecoration(
-                  border: Border.all(
-                    width: 1.0,
-                    color: Colors.grey,
-                  ),
-                  borderRadius: BorderRadius.circular(12.0)),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
+      margin: const EdgeInsets.only(top: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: titleStyle,
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 8),
+            padding: const EdgeInsets.only(left: 14),
+            width: SizeConfig.screenWidth,
+            height: 52,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: Colors.grey,
+                )),
+            child: Row(
+              children: [
+                Expanded(
                     child: TextFormField(
-                      autofocus: false,
-                      cursorColor:
-                          Get.isDarkMode ? Colors.grey[100] : Colors.grey[600],
-                      readOnly: widget == null ? false : true,
-                      controller: controller,
-                      style: subTitleTextStle,
-                      decoration: InputDecoration(
-                        hintText: hint,
-                        hintStyle: subTitleTextStle,
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: context.theme.colorScheme.background,
-                            width: 0,
-                          ),
-                        ),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: context.theme.colorScheme.background,
-                            width: 0,
-                          ),
-                        ),
-                      ),
-                    ),
+                  controller: controller,
+                  autofocus: false,
+                  readOnly: widget != null ? true : false,
+                  style: subTitleStyle,
+                  cursorColor:
+                      Get.isDarkMode ? Colors.grey[100] : Colors.grey[700],
+                  decoration: InputDecoration(
+                    hintText: hint,
+                    hintStyle: subTitleStyle,
+                    enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                      // ignore: deprecated_member_use
+                      color: context.theme.backgroundColor,
+                    )),
+                    focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                      // ignore: deprecated_member_use
+                      color: context.theme.backgroundColor,
+                      width: 0,
+                    )),
                   ),
-                  widget == null ? Container() : widget!,
-                ],
-              ),
-            )
-          ],
-        ));
+                )),
+                widget ?? Container(),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

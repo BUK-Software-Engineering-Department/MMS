@@ -1,7 +1,7 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:mms/models/medicine.dart';
 
+import '../models/medicine.dart';
 
 class DBHelper {
   static Database? _db;
@@ -10,51 +10,65 @@ class DBHelper {
 
   static Future<void> initDb() async {
     if (_db != null) {
-      debugPrint("not null db");
+      debugPrint('db not null');
       return;
     }
     try {
-      String path = '${await getDatabasesPath()}medicines.db';
-      debugPrint("in database path");
-      _db = await openDatabase(
-        path,
-        version: _version,
-        onCreate: (db, version) {
-          debugPrint("creating a new one");
-          return db.execute(
-              "CREATE TABLE $_tableName("
-              "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-              "title STRING, note TEXT, date STRING, "
-              "startTime STRING,  "
-              "remind INTEGER, repeat STRING, "
-              "color INTEGER, "
-              "dosage STRING, "  // Add the new column for dosage
-              "isCompleted INTEGER)"
-          );
-        },
-      );
+      String path = '${await getDatabasesPath()}medicine.db';
+      debugPrint('in db path');
+      _db = await openDatabase(path, version: _version,
+          onCreate: (Database db, int version) async {
+        debugPrint('Creating new one');
+        // When creating the db, create the table
+        return db.execute('CREATE TABLE $_tableName ('
+            'id INTEGER PRIMARY KEY AUTOINCREMENT, '
+            'title STRING, note TEXT, date STRING, '
+            'startTime STRING, endTime STRING, '
+            'remind INTEGER, repeat STRING, '
+            'color INTEGER, '
+            'dosage STRING, '
+            'isCompleted INTEGER)');
+      });
+      print('DB Created');
     } catch (e) {
       print(e);
     }
   }
 
-  static Future<int> insert(Medicine medicine) async {
-    print("insert function called");
-    return await _db!.insert(_tableName, medicine.toJson());
+  static Future<int> insert(Medicine? medicine) async {
+    print('insert function called');
+    try {
+      return await _db!.insert(_tableName, medicine!.toJson());
+    } catch (e) {
+      print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+      return 9000;
+    }
   }
- 
-  static Future<int> delete(Medicine medicine) async =>
-      await _db!.delete(_tableName, where: 'id = ?', whereArgs: [medicine.id]);
+
+  static Future<int> delete(Medicine medicine) async {
+    print('insert');
+    return await _db!.delete(
+      _tableName,
+      where: 'id = ?',
+      whereArgs: [medicine.id],
+    );
+  }
+
+  static Future<int> deleteAll() async {
+    print('insert');
+    return await _db!.delete(_tableName);
+  }
 
   static Future<List<Map<String, dynamic>>> query() async {
-    print("query function called");
-    return _db!.query(_tableName);
+    print('Query Called!!!!!!!!!!!!!!!!!!!');
+    print('insert');
+    return await _db!.query(_tableName);
   }
 
-  static Future<int> update(int? id) async {
-    print("update function called");
+  static Future<int> update(int ? id) async {
+    print('Update function called');
     return await _db!.rawUpdate('''
-    UPDATE medicines   
+    UPDATE medicines
     SET isCompleted = ?
     WHERE id = ?
     ''', [1, id]);

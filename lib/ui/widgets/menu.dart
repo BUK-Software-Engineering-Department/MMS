@@ -49,12 +49,12 @@ class _MyMenuState extends State<MyMenu> {
           children: [
             GestureDetector(
               onTap: () {
-                ThemeService().switchTheme();
+                ThemeServices().switchTheme();
                 notifyHelper.displayNotification(
-                  title: "Theme Changed",
+                  title: 'Theme Changed',
                   body: Get.isDarkMode
-                      ? "Light theme activated."
-                      : "Dark theme activated",
+                      ? 'Light theme activated.'
+                      : 'Dark theme activated',
                 );
               },
               child: Icon(
@@ -100,7 +100,7 @@ class _MyMenuState extends State<MyMenu> {
             title: const Text('Logout'),
             onTap: () {
               FirebaseAuth.instance.signOut().then((value){
-                print("Signed Out");
+                print('Signed Out');
                 Navigator.pushNamed(context, '/');
               });
             },
