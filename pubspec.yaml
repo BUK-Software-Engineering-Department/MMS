@@ -29,6 +29,7 @@ dependencies:
   flutter_timezone: ^1.0.7
   firebase_core: ^2.25.4
   firebase_auth: ^4.17.4
+  email_validator: ^2.1.17
 
 
 dev_dependencies:

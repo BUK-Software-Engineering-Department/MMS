@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mms/ui/pages/reusable/reusable_text_field.dart';
 import 'package:mms/ui/pages/reusable/signin_signup_btn.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+//import 'package:email_validator/email_validator.dart'; 
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -14,6 +15,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _passwordTextConroller = TextEditingController();
   final TextEditingController _emailTextConroller = TextEditingController();
   final TextEditingController _usernameTextConroller = TextEditingController();
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,15 +72,55 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 const SizedBox(height: 20),
                 signInSignUpButton(context, false, () {
-                  FirebaseAuth.instance.createUserWithEmailAndPassword(email: _emailTextConroller.text, 
-                  password: _passwordTextConroller.text).then((value) {
-                    print("Created Account");
-                    Navigator.pushNamed(context, '/home');
-                  }).onError((error, stackTrace) {
-                    print("Error ${error.toString()}");
-                  });
-                  
-                }),
+                FirebaseAuth.instance.createUserWithEmailAndPassword(
+                  email: _emailTextConroller.text,
+                  password: _passwordTextConroller.text,
+                ).then((value) {
+                  // Send email verification
+                  sendEmailVerification();
+                  print("Created Account");
+                  // Show prompt to verify email
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text("Verify Email"),
+                        content: const Text("A verification email has been sent to your email address. Please verify your email before signing in."),
+                        actions: <Widget>[
+                          ElevatedButton(
+                            child: const Text("OK"),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                }).catchError((error) {
+                  // Handle sign-up errors
+                  print("Error signing up: $error");
+                  // Show error message to the user
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text("Error"),
+                        content: const Text("An error occurred while signing up. Please try again."),
+                        actions: <Widget>[
+                          ElevatedButton(
+                            child: const Text("OK"),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                });
+              }),
+
               ],
             ),
           ),
@@ -86,4 +128,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
     );
   }
+  Future<void> sendEmailVerification() async {
+  User? user = FirebaseAuth.instance.currentUser;
+  if (user != null) {
+    await user.sendEmailVerification();
+  }
+  }
+
 }

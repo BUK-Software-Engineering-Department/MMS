@@ -58,16 +58,16 @@ class _SignInState extends State<SignIn> {
                 ),
                 const SizedBox(height: 20),
                 signInSignUpButton(context, true, () {
-                  FirebaseAuth.instance.signInWithEmailAndPassword(email: _emailTextConroller.text, 
-                  password: _passwordTextConroller.text).then((value) {
+                  FirebaseAuth.instance.signInWithEmailAndPassword(
+                    email: _emailTextConroller.text,
+                    password: _passwordTextConroller.text,
+                  ).then((value) {
                     print("Signed In");
-                    Navigator.pushNamed(context, '/home').onError((error, stackTrace){
-                    print("Error ${error.toString()}");
-                    return null;
+                    // Check email verification status
+                    checkEmailVerification();
                   });
-                  });
-                  
                 }),
+
                 signUpOption()
               ],
             ),
@@ -76,7 +76,26 @@ class _SignInState extends State<SignIn> {
       ),
     );
   }
+    void checkEmailVerification() {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      if (user.emailVerified) {
+        // Email is verified, proceed to the home screen
+        Navigator.pushNamed(context, '/home');
+      } else {
+        // Email is not verified, prompt user to verify email
+        ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            content: Text('Please verify your email address.'),
+            duration: Duration(seconds: 5),
+            
+          ),
+        );
+      }
+    }
+  }
 
+  
   Row signUpOption() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
