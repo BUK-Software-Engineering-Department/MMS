@@ -17,7 +17,7 @@ class MedicationHistory extends StatelessWidget {
     return Scaffold(
       appBar: _buildAppBar(context),
       backgroundColor: context.theme.colorScheme.background,
-      drawer:  MyMenu(),
+      drawer:  const MyMenu(),
       body: _buildMedicineList(medicineController),
     );
   }
@@ -30,19 +30,16 @@ class MedicationHistory extends StatelessWidget {
   }
 
   Widget _buildMedicineList(MedicineController medicineController) {
-    return Expanded(
-      flex: 1,
-      child: Obx(
-        () => ListView.builder(
-          scrollDirection: Axis.vertical,
-          itemCount: medicineController.medicineList.length,
-          itemBuilder: (context, index) {
-            Medicine medicine = medicineController.medicineList[index];
-            return medicine.isCompleted == 1
-                ? _buildMedicineRow(context, medicine, index)
-                : const SizedBox.shrink(); // Use SizedBox.shrink() for better performance
-          },
-        ),
+    return Obx(
+      () => ListView.builder(
+        scrollDirection: Axis.vertical,
+        itemCount: medicineController.medicineList.length,
+        itemBuilder: (context, index) {
+          Medicine medicine = medicineController.medicineList[index];
+          return medicine.isCompleted == 1
+              ? _buildMedicineRow(context, medicine, index)
+              : const SizedBox.shrink(); // Use SizedBox.shrink() for better performance
+        },
       ),
     );
   }

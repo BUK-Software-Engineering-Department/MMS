@@ -246,7 +246,7 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
             color: Colors.red,
           ));
     } else {
-      print(
+      debugPrint(
           '############################ SOMETHING WRONG HAPPENED #############################');
     }
   }
@@ -267,9 +267,9 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
           repeat: _selectedRepeat,
         ),
       );
-      print('Value: $value');
+      debugPrint('Value: $value');
     } catch (e) {
-      print('error: $e');
+      debugPrint('error: $e');
     }
   }
 
@@ -328,7 +328,7 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
     if (pickedDate != null) {
       setState(() => _selectedDate = pickedDate);
     } else {
-      print('Please select correct date');
+      debugPrint('Please select correct date');
     }
   }
 
@@ -350,7 +350,7 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
     } else if (!isStartTime) {
       setState(() => _endTime = formattedTime);
     } else {
-      print('Something went wrong !');
+      debugPrint('Something went wrong !');
     }
   }
 }

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mms/ui/pages/reusable/reusable_text_field.dart';
 import 'package:mms/ui/pages/reusable/signin_signup_btn.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-//import 'package:email_validator/email_validator.dart'; 
+import 'package:firebase_auth/firebase_auth.dart'; 
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -78,7 +77,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ).then((value) {
                   // Send email verification
                   sendEmailVerification();
-                  print("Created Account");
+                  debugPrint("Created Account");
                   // Show prompt to verify email
                   showDialog(
                     context: context,
@@ -99,7 +98,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   );
                 }).catchError((error) {
                   // Handle sign-up errors
-                  print("Error signing up: $error");
+                  debugPrint("Error signing up: $error");
                   // Show error message to the user
                   showDialog(
                     context: context,

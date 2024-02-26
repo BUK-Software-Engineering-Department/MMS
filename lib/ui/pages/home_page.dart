@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> {
       // ignore: deprecated_member_use
       backgroundColor: context.theme.backgroundColor,
       appBar: _customAppBar(),
-      drawer: MyMenu(),
+      drawer: const MyMenu(),
       body: Column(
         children: [
           _addMedicineBar(),
@@ -163,20 +163,6 @@ class _HomePageState extends State<HomePage> {
                     (medicine.repeat == 'Monthly' &&
                         DateFormat.yMd().parse(medicine.date!).day ==
                             _selectedDate.day)) {
-                  /*try {
-                    //var hour = task.startTime.toString().split(':')[0];
-                    //var minutes = task.startTime.toString().split(':')[1]; 
-                    var date = DateFormat.jm().parse(task.startTime!);
-                    var myTime = DateFormat('HH:mm').format(date);
-
-                    notifyHelper.scheduledNotification(
-                      int.parse(myTime.toString().split(':')[0]),
-                      int.parse(myTime.toString().split(':')[1]),
-                      task,
-                    );
-                  } catch (e) {
-                    print('Error parsing time: $e');
-                  }*/
                  try {
                   if (medicine.startTime != null) {
                     var dateFormat = DateFormat('h:mm a'); // Specify the format of task.startTime
@@ -190,10 +176,10 @@ class _HomePageState extends State<HomePage> {
                     );
                   } else {
                     // Handle case where startTime is null
-                    print('Task startTime is null');
+                    debugPrint('Task startTime is null');
                   }
                 } catch (e) {
-                  print('Error parsing time: $e');
+                  debugPrint('Error parsing time: $e');
                 }
 
  

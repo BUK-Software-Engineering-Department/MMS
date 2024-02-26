@@ -29,24 +29,24 @@ class DBHelper {
             'dosage STRING, '
             'isCompleted INTEGER)');
       });
-      print('DB Created');
+      debugPrint('DB Created');
     } catch (e) {
-      print(e);
+      debugPrint(e as String?);
     }
   }
 
   static Future<int> insert(Medicine? medicine) async {
-    print('insert function called');
+    debugPrint('insert function called');
     try {
       return await _db!.insert(_tableName, medicine!.toJson());
     } catch (e) {
-      print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+      debugPrint('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
       return 9000;
     }
   }
 
   static Future<int> delete(Medicine medicine) async {
-    print('insert');
+    debugPrint('insert');
     return await _db!.delete(
       _tableName,
       where: 'id = ?',
@@ -55,18 +55,18 @@ class DBHelper {
   }
 
   static Future<int> deleteAll() async {
-    print('insert');
+    debugPrint('insert');
     return await _db!.delete(_tableName);
   }
 
   static Future<List<Map<String, dynamic>>> query() async {
-    print('Query Called!!!!!!!!!!!!!!!!!!!');
-    print('insert');
+    debugPrint('Query Called!!!!!!!!!!!!!!!!!!!');
+    debugPrint('insert');
     return await _db!.query(_tableName);
   }
 
   static Future<int> update(int ? id) async {
-    print('Update function called');
+    debugPrint('Update function called');
     return await _db!.rawUpdate('''
     UPDATE medicines
     SET isCompleted = ?

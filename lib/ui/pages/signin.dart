@@ -62,7 +62,7 @@ class _SignInState extends State<SignIn> {
                     email: _emailTextConroller.text,
                     password: _passwordTextConroller.text,
                   ).then((value) {
-                    print("Signed In");
+                    debugPrint("Signed In");
                     // Check email verification status
                     checkEmailVerification();
                   });

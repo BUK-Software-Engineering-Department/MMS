@@ -8,13 +8,14 @@ import 'package:mms/ui/theme.dart';
 
 class MyMenu extends StatefulWidget {
 
-  MyMenu({super.key});
+  const MyMenu({super.key});
 
   @override
   State<MyMenu> createState() => _MyMenuState();
 }
 
 class _MyMenuState extends State<MyMenu> {
+  // ignore: prefer_typing_uninitialized_variables
   late var notifyHelper;
 
   @override
@@ -100,7 +101,7 @@ class _MyMenuState extends State<MyMenu> {
             title: const Text('Logout'),
             onTap: () {
               FirebaseAuth.instance.signOut().then((value){
-                print('Signed Out');
+                debugPrint('Signed Out');
                 Navigator.pushNamed(context, '/');
               });
             },

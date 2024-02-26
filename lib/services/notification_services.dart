@@ -51,7 +51,7 @@ class NotifyHelper {
   }
 
   displayNotification({required String title, required String body}) async {
-    print('doing test');
+    debugPrint('doing test');
     var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
         'your channel id', 'your channel name',
         channelDescription: 'your channel description',
@@ -72,12 +72,12 @@ class NotifyHelper {
 
   cancelNotification(Medicine medicine) async {
     await flutterLocalNotificationsPlugin.cancel(medicine.id!);
-    print('Notification is canceled');
+    debugPrint('Notification is canceled');
   }
 
   cancelAllNotifications() async {
     await flutterLocalNotificationsPlugin.cancelAll();
-    print('Notification is canceled');
+    debugPrint('Notification is canceled');
   }
 
   scheduledNotification(int hour, int minutes, Medicine medicine) async {
@@ -131,7 +131,7 @@ class NotifyHelper {
       scheduledDate = afterRemind(remind, scheduledDate);
     }
 
-    print('Next scheduledDate = $scheduledDate');
+    debugPrint('Next scheduledDate = $scheduledDate');
 
     return scheduledDate;
   }

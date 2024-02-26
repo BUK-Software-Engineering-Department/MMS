@@ -72,7 +72,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w300,
-                    color: Get.isDarkMode ? Colors.grey[100] : Color.fromARGB(255, 236, 227, 227)),
+                    color: Get.isDarkMode ? Colors.grey[100] : const Color.fromARGB(255, 236, 227, 227)),
               ),
             ],
                 ),
